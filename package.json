@@ -1,7 +1,7 @@
 {
   "name": "ebird-histogramr",
   "preferGlobal": false,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Robert Gerald Porter <rob@inpictures.ca>",
   "description": "Reader for eBird Hotspot Histograms",
   "main": "./app/index.js",
@@ -61,9 +61,5 @@
   "homepage": "https://github.com/rgeraldporter/ebird-histogramr#readme",
   "directories": {
     "doc": "doc"
-  },
-  "dependencies": {
-    "bhttp": "^1.2.4",
-    "bluebird": "^3.4.6"
   }
 }

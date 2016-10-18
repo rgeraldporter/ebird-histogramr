@@ -9,6 +9,10 @@ var _Maybe = require('./lib/Maybe');
 
 var _Maybe2 = _interopRequireDefault(_Maybe);
 
+var _csv = require('./lib/csv');
+
+var _csv2 = _interopRequireDefault(_csv);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var memoize = function memoize(fn) {
@@ -73,16 +77,42 @@ var monthOfTheYear = memoize(_monthOfTheYear);
 
 function getTaxa(arr) {
 
-    var TAXA = 10;
+    var position = 10;
 
-    return Number(arr[TAXA].split(/\t/)[1]);
+    return Number(arr[position].split(/\t/)[1]);
 }
 
 function getSampleSize(arr) {
 
-    var SAMPLE_SIZE = 13;
+    var position = 13;
 
-    return parseChartColumns(arr[SAMPLE_SIZE].split(/\t/).slice(1));
+    return parseChartColumns(arr[position].split(/\t/).slice(1));
+}
+
+function taxaToCsv(val) {
+
+    var arr = [];
+
+    Object.keys(val).forEach(function (key) {
+
+        var obj = {};
+
+        obj.name = key;
+
+        Object.keys(val[key]).forEach(function (val2, index) {
+
+            obj[val2 + '_1'] = val[key][val2][0];
+            obj[val2 + '_2'] = val[key][val2][1];
+            obj[val2 + '_3'] = val[key][val2][2];
+            obj[val2 + '_4'] = val[key][val2][3];
+        });
+
+        arr.push(obj);
+    });
+
+    arr.pop();
+
+    return (0, _csv2.default)(arr);
 }
 
 function processFile(str) {
@@ -92,7 +122,11 @@ function processFile(str) {
     return _Maybe2.default.of({
         sampleSize: getSampleSize(lines),
         taxaCount: getTaxa(lines),
-        taxaList: getTaxaList(lines)
+        taxaList: getTaxaList(lines),
+        get csv() {
+
+            return taxaToCsv(this.taxaList);
+        }
     });
 }
 

@@ -68,7 +68,83 @@ $__System.registerDynamic("2", [], true, function($__require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("1", ["2"], true, function($__require, exports, module) {
+$__System.registerDynamic("3", [], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  Object.defineProperty(exports, "__esModule", {value: true});
+  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function(obj) {
+    return typeof obj;
+  } : function(obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  };
+  function toCsvValue(theValue, sDelimiter) {
+    var t = typeof theValue === "undefined" ? "undefined" : _typeof(theValue);
+    var output = void 0,
+        stringDelimiter = void 0;
+    if (typeof sDelimiter === "undefined" || sDelimiter === null)
+      stringDelimiter = '"';
+    else
+      stringDelimiter = sDelimiter;
+    if (t === "undefined" || t === null)
+      output = '';
+    else if (t === 'string')
+      output = sDelimiter + theValue + sDelimiter;
+    else
+      output = String(theValue);
+    return output;
+  }
+  function toCsv(objArray, sDelimiter, cDelimiter) {
+    var i = void 0,
+        l = void 0,
+        names = [],
+        name = void 0,
+        value = void 0,
+        obj = void 0,
+        row = void 0,
+        output = "",
+        n = void 0,
+        nl = void 0;
+    if (typeof sDelimiter === "undefined" || sDelimiter === null) {
+      sDelimiter = '"';
+    }
+    if (typeof cDelimiter === "undefined" || cDelimiter === null) {
+      cDelimiter = ",";
+    }
+    for (i = 0, l = objArray.length; i < l; i += 1) {
+      obj = objArray[i];
+      row = "";
+      if (i === 0) {
+        for (name in obj) {
+          if (obj.hasOwnProperty(name)) {
+            names.push(name);
+            row += [sDelimiter, name, sDelimiter, cDelimiter].join("");
+          }
+        }
+        row = row.substring(0, row.length - 1);
+        output += row;
+      }
+      output += "\n";
+      row = "";
+      for (n = 0, nl = names.length; n < nl; n += 1) {
+        name = names[n];
+        value = obj[name];
+        if (n > 0) {
+          row += ",";
+        }
+        row += toCsvValue(value, '"');
+      }
+      output += row;
+    }
+    return output;
+  }
+  exports.default = toCsv;
+  return module.exports;
+});
+
+$__System.registerDynamic("1", ["2", "3"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -78,6 +154,8 @@ $__System.registerDynamic("1", ["2"], true, function($__require, exports, module
   exports.default = undefined;
   var _Maybe = $__require('2');
   var _Maybe2 = _interopRequireDefault(_Maybe);
+  var _csv = $__require('3');
+  var _csv2 = _interopRequireDefault(_csv);
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {default: obj};
   }
@@ -124,19 +202,38 @@ $__System.registerDynamic("1", ["2"], true, function($__require, exports, module
   };
   var monthOfTheYear = memoize(_monthOfTheYear);
   function getTaxa(arr) {
-    var TAXA = 10;
-    return Number(arr[TAXA].split(/\t/)[1]);
+    var position = 10;
+    return Number(arr[position].split(/\t/)[1]);
   }
   function getSampleSize(arr) {
-    var SAMPLE_SIZE = 13;
-    return parseChartColumns(arr[SAMPLE_SIZE].split(/\t/).slice(1));
+    var position = 13;
+    return parseChartColumns(arr[position].split(/\t/).slice(1));
+  }
+  function taxaToCsv(val) {
+    var arr = [];
+    Object.keys(val).forEach(function(key) {
+      var obj = {};
+      obj.name = key;
+      Object.keys(val[key]).forEach(function(val2, index) {
+        obj[val2 + '_1'] = val[key][val2][0];
+        obj[val2 + '_2'] = val[key][val2][1];
+        obj[val2 + '_3'] = val[key][val2][2];
+        obj[val2 + '_4'] = val[key][val2][3];
+      });
+      arr.push(obj);
+    });
+    arr.pop();
+    return (0, _csv2.default)(arr);
   }
   function processFile(str) {
     var lines = str.split(/\n/);
     return _Maybe2.default.of({
       sampleSize: getSampleSize(lines),
       taxaCount: getTaxa(lines),
-      taxaList: getTaxaList(lines)
+      taxaList: getTaxaList(lines),
+      get csv() {
+        return taxaToCsv(this.taxaList);
+      }
     });
   }
   exports.default = processFile;

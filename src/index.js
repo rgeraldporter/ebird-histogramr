@@ -1,4 +1,5 @@
 import Maybe from './lib/Maybe';
+import toCsv from './lib/csv';
 
 const memoize = fn => {
 
@@ -63,16 +64,42 @@ const monthOfTheYear = memoize(_monthOfTheYear);
 
 function getTaxa(arr) {
 
-    const TAXA = 10;
+    const position = 10;
 
-    return Number(arr[TAXA].split(/\t/)[1]);
+    return Number(arr[position].split(/\t/)[1]);
 }
 
 function getSampleSize(arr) {
 
-    const SAMPLE_SIZE = 13;
+    const position = 13;
 
-    return parseChartColumns(arr[SAMPLE_SIZE].split(/\t/).slice(1));
+    return parseChartColumns(arr[position].split(/\t/).slice(1));
+}
+
+function taxaToCsv(val) {
+
+    const arr = [];
+
+    Object.keys(val).forEach((key) => {
+
+        const obj = {};
+
+        obj.name = key;
+
+        Object.keys(val[key]).forEach((val2, index) => {
+
+            obj[val2+'_1'] = val[key][val2][0];
+            obj[val2+'_2'] = val[key][val2][1];
+            obj[val2+'_3'] = val[key][val2][2];
+            obj[val2+'_4'] = val[key][val2][3];
+        });
+
+        arr.push(obj);
+    });
+
+    arr.pop();
+
+    return toCsv(arr);
 }
 
 function processFile(str) {
@@ -82,7 +109,11 @@ function processFile(str) {
     return Maybe.of({
         sampleSize: getSampleSize(lines),
         taxaCount: getTaxa(lines),
-        taxaList: getTaxaList(lines)
+        taxaList: getTaxaList(lines),
+        get csv() {
+
+            return taxaToCsv(this.taxaList);
+        }
     });
 }
 
