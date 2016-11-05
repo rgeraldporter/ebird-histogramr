@@ -1,5 +1,5 @@
 # eBird Histogram Reader (ebird-histogramr)
-####v0.1.0
+####v0.3.0
 
 A module for parsing eBird ["BarChart" histogram files](http://help.ebird.org/customer/portal/articles/1010553-understanding-the-ebird-bar-charts).
 

@@ -159,6 +159,17 @@ $__System.registerDynamic("1", ["2", "3"], true, function($__require, exports, m
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {default: obj};
   }
+  function _toConsumableArray(arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0,
+          arr2 = Array(arr.length); i < arr.length; i++) {
+        arr2[i] = arr[i];
+      }
+      return arr2;
+    } else {
+      return Array.from(arr);
+    }
+  }
   var memoize = function memoize(fn) {
     var cache = {};
     return function() {
@@ -209,12 +220,19 @@ $__System.registerDynamic("1", ["2", "3"], true, function($__require, exports, m
     var position = 13;
     return parseChartColumns(arr[position].split(/\t/).slice(1));
   }
+  function sampleToCsv(val) {
+    var sample = ["Sample Size"];
+    Object.keys(val).forEach(function(key) {
+      sample.push.apply(sample, _toConsumableArray(val[key]));
+    });
+    return (0, _csv2.default)([sample]).split(/\n/).slice(1);
+  }
   function taxaToCsv(val) {
     var arr = [];
     Object.keys(val).forEach(function(key) {
       var obj = {};
       obj.name = key;
-      Object.keys(val[key]).forEach(function(val2, index) {
+      Object.keys(val[key]).forEach(function(val2) {
         obj[val2 + '_1'] = val[key][val2][0];
         obj[val2 + '_2'] = val[key][val2][1];
         obj[val2 + '_3'] = val[key][val2][2];
@@ -231,8 +249,11 @@ $__System.registerDynamic("1", ["2", "3"], true, function($__require, exports, m
       sampleSize: getSampleSize(lines),
       taxaCount: getTaxa(lines),
       taxaList: getTaxaList(lines),
-      get csv() {
+      get taxaCsv() {
         return taxaToCsv(this.taxaList);
+      },
+      get allCsv() {
+        return sampleToCsv(this.sampleSize) + '\n' + this.taxaCsv;
       }
     });
   }

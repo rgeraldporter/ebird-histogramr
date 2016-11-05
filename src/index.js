@@ -76,17 +76,29 @@ function getSampleSize(arr) {
     return parseChartColumns(arr[position].split(/\t/).slice(1));
 }
 
+function sampleToCsv(val) {
+
+    const sample = ["Sample Size"];
+
+    Object.keys(val).forEach(key => {
+
+        sample.push(...val[key]);
+    });
+
+    return toCsv([sample]).split(/\n/).slice(1);
+}
+
 function taxaToCsv(val) {
 
     const arr = [];
 
-    Object.keys(val).forEach((key) => {
+    Object.keys(val).forEach(key => {
 
         const obj = {};
 
         obj.name = key;
 
-        Object.keys(val[key]).forEach((val2, index) => {
+        Object.keys(val[key]).forEach(val2 => {
 
             obj[val2+'_1'] = val[key][val2][0];
             obj[val2+'_2'] = val[key][val2][1];
@@ -110,9 +122,13 @@ function processFile(str) {
         sampleSize: getSampleSize(lines),
         taxaCount: getTaxa(lines),
         taxaList: getTaxaList(lines),
-        get csv() {
+        get taxaCsv() {
 
             return taxaToCsv(this.taxaList);
+        },
+        get allCsv() {
+
+            return sampleToCsv(this.sampleSize) + '\n' + this.taxaCsv;
         }
     });
 }
