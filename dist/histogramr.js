@@ -218,7 +218,7 @@ $__System.registerDynamic("1", ["2", "3"], true, function($__require, exports, m
   }
   function getSampleSize(arr) {
     var position = 13;
-    return parseChartColumns(arr[position].split(/\t/).slice(1));
+    return parseChartColumns(arr[position].split(/\t/));
   }
   function sampleToCsv(val) {
     var sample = ["Sample Size"];

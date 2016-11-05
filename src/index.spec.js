@@ -8,7 +8,7 @@ describe('the histogramr', () => {
         const file = fs.readFileSync('src/example.BarChart.txt', 'utf8');
         const histogram = histogramr(file);
 
-        expect(histogram.emit().sampleSize.January[3]).toBe(5);
+        expect(histogram.emit().sampleSize.January[3]).toBe(6);
         expect(histogram.emit().taxaCount).toBe(167);
         expect(histogram.emit().taxaList['Canada Goose'].January[0]).toBe(0.25);
         expect(histogram.emit().taxaList['Canada Goose'].December[3]).toBe(0.25);
@@ -184,7 +184,7 @@ describe('the histogramr', () => {
 "House Sparrow",0.25,0,0.16666666666666666,0.3333333333333333,0.2,0.3333333333333333,0.2,0.4,0,0.3,0.3,0.3,0.2,0.125,0.047619047619047616,0.125,0.0625,0.2,0,0.09090909090909091,0.06666666666666667,0.125,0.07142857142857142,0.25,0.25,0.25,0.2857142857142857,0,0,0,0,0,0,0,0,0,0,0.1,0,0,0,0,0.5,0,0,0,0,0.25
 "passerine sp.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.047619047619047616,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.08333333333333333,0,0,0,0,0,0,0.16666666666666666,0,0,0,0`;
 
-    const csvAllSpec = `"Sample Size",4,6,6,5,3,5,5,4,10,10,20,10,16,21,24,16,20,19,22,15,16,14,12,8,4,7,8,8,11,10,14,11,8,11,14,12,10,10,11,5,5,4,6,4,5,3,4,0
+    const csvAllSpec = `"Sample Size",4,4,6,6,5,3,5,5,4,10,10,20,10,16,21,24,16,20,19,22,15,16,14,12,8,4,7,8,8,11,10,14,11,8,11,14,12,10,10,11,5,5,4,6,4,5,3,4
 "name","January_1","January_2","January_3","January_4","February_1","February_2","February_3","February_4","March_1","March_2","March_3","March_4","April_1","April_2","April_3","April_4","May_1","May_2","May_3","May_4","June_1","June_2","June_3","June_4","July_1","July_2","July_3","July_4","August_1","August_2","August_3","August_4","September_1","September_2","September_3","September_4","October_1","October_2","October_3","October_4","Novermber_1","Novermber_2","Novermber_3","Novermber_4","December_1","December_2","December_3","December_4"
 "Canada Goose",0.25,0.5,0.3333333333333333,0.3333333333333333,0.2,0.3333333333333333,0.4,0.4,0.25,0.4,0.6,0.4,0.6,0.5,0.47619047619047616,0.375,0.5,0.3,0.10526315789473684,0.22727272727272727,0.06666666666666667,0.1875,0,0,0,0,0.14285714285714285,0,0,0,0.1,0,0.18181818181818182,0.5,0.09090909090909091,0.5,0.3333333333333333,0.3,0.2,0.36363636363636365,0.4,0,0,0.5,0.25,0.2,0,0.25
 "Mute Swan",0,0,0,0,0,0,0,0,0,0,0,0,0.1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

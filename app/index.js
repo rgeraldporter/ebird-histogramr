@@ -88,7 +88,7 @@ function getSampleSize(arr) {
 
     var position = 13;
 
-    return parseChartColumns(arr[position].split(/\t/).slice(1));
+    return parseChartColumns(arr[position].split(/\t/));
 }
 
 function sampleToCsv(val) {
