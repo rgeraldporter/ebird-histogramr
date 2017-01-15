@@ -3,6 +3,8 @@
 
 A module for parsing eBird ["BarChart" histogram files](http://help.ebird.org/customer/portal/articles/1010553-understanding-the-ebird-bar-charts).
 
+[![Build Status](https://travis-ci.org/rgeraldporter/ebird-histogramr.svg?branch=master)](https://travis-ci.org/rgeraldporter/ebird-histogramr)
+
 ## Setup and Usage
 
 Easy to set up, either include the `/dist/histogramr.min.js` in your web application, or for a node.js application:
