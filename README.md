@@ -1,5 +1,5 @@
 # eBird Histogram Reader (ebird-histogramr)
-####v0.3.2
+#### v1.0.0
 
 A module for parsing eBird ["BarChart" histogram files](http://help.ebird.org/customer/portal/articles/1010553-understanding-the-ebird-bar-charts).
 
@@ -49,7 +49,7 @@ var histogram = histogramr(file);
 /* ...etc, see ES6 example */
 ```
 
-##License
+## License
 
 The MIT License (MIT)
 
