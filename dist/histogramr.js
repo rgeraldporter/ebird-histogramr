@@ -193,18 +193,19 @@ $__System.registerDynamic("1", ["2", "3"], true, function($__require, exports, m
     return obj;
   }
   function getTaxaList(arr) {
-    var startLine = 15;
+    var startLine = 16;
     return arr.reduce(function(prev, current, index) {
       if (index < startLine)
         return prev;
       var tabs = current.split(/\t/);
+      var species = tabs[0].split('(')[0].trim();
       if (tabs.length)
-        prev[tabs[0]] = parseChartColumns(tabs);
+        prev[species] = parseChartColumns(tabs);
       return prev;
     }, {});
   }
   var _monthOfTheYear = function _monthOfTheYear() {
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'Novermber', 'December'];
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return months.reduce(function(prev, current, index) {
       var oneIndex = (index + 1) * 4;
       prev[current] = [oneIndex - 3, oneIndex - 2, oneIndex - 1, oneIndex];
@@ -213,11 +214,11 @@ $__System.registerDynamic("1", ["2", "3"], true, function($__require, exports, m
   };
   var monthOfTheYear = memoize(_monthOfTheYear);
   function getTaxa(arr) {
-    var position = 10;
+    var position = 11;
     return Number(arr[position].split(/\t/)[1]);
   }
   function getSampleSize(arr) {
-    var position = 13;
+    var position = 14;
     return parseChartColumns(arr[position].split(/\t/));
   }
   function sampleToCsv(val) {

@@ -48,15 +48,16 @@ function parseChartColumns(arr) {
 
 function getTaxaList(arr) {
 
-    var startLine = 15;
+    var startLine = 16;
 
     return arr.reduce(function (prev, current, index) {
 
         if (index < startLine) return prev;
 
         var tabs = current.split(/\t/);
+        var species = tabs[0].split('(')[0].trim();
 
-        if (tabs.length) prev[tabs[0]] = parseChartColumns(tabs);
+        if (tabs.length) prev[species] = parseChartColumns(tabs);
 
         return prev;
     }, {});
@@ -64,7 +65,7 @@ function getTaxaList(arr) {
 
 var _monthOfTheYear = function _monthOfTheYear() {
 
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'Novermber', 'December'];
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     return months.reduce(function (prev, current, index) {
 
@@ -79,14 +80,14 @@ var monthOfTheYear = memoize(_monthOfTheYear);
 
 function getTaxa(arr) {
 
-    var position = 10;
+    var position = 11;
 
     return Number(arr[position].split(/\t/)[1]);
 }
 
 function getSampleSize(arr) {
 
-    var position = 13;
+    var position = 14;
 
     return parseChartColumns(arr[position].split(/\t/));
 }

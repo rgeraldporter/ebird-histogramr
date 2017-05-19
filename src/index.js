@@ -28,7 +28,7 @@ function parseChartColumns(arr) {
 
 function getTaxaList(arr) {
 
-    const startLine = 15;
+    const startLine = 16;
 
     return arr.reduce((prev, current, index) => {
 
@@ -36,9 +36,10 @@ function getTaxaList(arr) {
             return prev;
 
         const tabs = current.split(/\t/);
+        const species = tabs[0].split('(')[0].trim();
 
         if (tabs.length)
-            prev[tabs[0]] = parseChartColumns(tabs);
+            prev[species] = parseChartColumns(tabs);
 
         return prev;
     }, {});
@@ -48,7 +49,7 @@ const _monthOfTheYear = () => {
 
     const months = [
         'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'Novermber', 'December'
+        'July', 'August', 'September', 'October', 'November', 'December'
     ];
 
     return months.reduce((prev, current, index) => {
@@ -64,14 +65,14 @@ const monthOfTheYear = memoize(_monthOfTheYear);
 
 function getTaxa(arr) {
 
-    const position = 10;
+    const position = 11;
 
     return Number(arr[position].split(/\t/)[1]);
 }
 
 function getSampleSize(arr) {
 
-    const position = 13;
+    const position = 14;
 
     return parseChartColumns(arr[position].split(/\t/));
 }

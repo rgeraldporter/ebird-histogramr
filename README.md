@@ -1,5 +1,5 @@
 # eBird Histogram Reader (ebird-histogramr)
-#### v1.0.0
+#### v1.1.0
 
 A module for parsing eBird ["BarChart" histogram files](http://help.ebird.org/customer/portal/articles/1010553-understanding-the-ebird-bar-charts).
 
@@ -15,8 +15,6 @@ npm install ebird-histogramr
 
 ... then include as an `import` or `require()` depending on your JavaScript version setup.
 
-### ES6+:
-
 For example, here's how the unit test uses it:
 
 ```
@@ -25,35 +23,38 @@ import histogramr from 'ebird-histogramr';
 const file = fs.readFileSync('src/example.BarChart.txt', 'utf8');
 const histogram = histogramr(file);
 
-expect(histogram.emit().sampleSize.January[3]).toBe(5); // sample size in 4th quarter of Jan is 5.0
-expect(histogram.emit().taxaCount).toBe(167); // 167 is the total taxa count 
+expect(histogram.emit().sampleSize.January[3]).toBe(7); // sample size in 4th quarter of Jan is 6.0
+expect(histogram.emit().taxaCount).toBe(169); // 169 is the total taxa count 
 
-// First quarter of January sees a 25% occcurrence of Canada Goose
-expect(histogram.emit().taxaList['Canada Goose'].January[0]).toBe(0.25);
+// First quarter of January sees a 50% occcurrence of Canada Goose
+expect(histogram.emit().taxaList['Canada Goose'].January[0]).toBe(0.5);
 
-// as does 4th quarter of December
-expect(histogram.emit().taxaList['Canada Goose'].December[3]).toBe(0.25);
+// The 4th quarter of December has a 14.285% occurrence
+expect(histogram.emit().taxaList['Canada Goose'].December[3]).toBe(0.14285714285714285);
 
-// 4th quarter of January see a 33% occurrence of House Sparrow:
-expect(histogram.emit().taxaList['House Sparrow'].January[3]).toBe(0.3333333333333333);
+// 4th quarter of January see a 28.571% occurrence of House Sparrow:
+expect(histogram.emit().taxaList['House Sparrow'].January[3]).toBe(0.2857142857142857);
 ```
 
-### Pre-ES6:
+## About eBird
 
-```
-var histogramr = require('ebird-histogramr');
+eBird is a real-time, online bird checklist resource by the Cornell Lab of Ornithology. For more information, see http://help.ebird.org/.
 
-var file = fs.readFileSync('src/example.BarChart.txt', 'utf8');
-var histogram = histogramr(file);
+## Version history
 
-/* ...etc, see ES6 example */
-```
+### v1.1
+
+Updated parser to work correctly with changes eBird made to the histogram.
+
+### v1.0
+
+Initial release
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Robert Gerald Porter
+Copyright (c) 2016-2017 Robert Gerald Porter
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
